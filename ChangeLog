@@ -1,0 +1,29 @@
+2013-01-28  Mark Witmer  <mark@markwitmer.com>
+
+	* xlib.c (everywhere): Replace references to deprecated scheme
+	features w/up-to-date equivalents
+	* xlib.scm: Replace dimensions->uniform-array with
+	make-typed-array
+
+2002-12-27  Neil Jerram  <neil@ossau.uklinux.net>
+
+	* xlib.c (scm_x_clear_window_x, scm_x_clear_area_x,
+	scm_x_create_pixmap_x, scm_x_copy_area_x): New.
+
+	* xlib.c (everywhere): Changes to compile under both Guile CVS and
+	Guile 1.6.x.
+
+	* xlib.c (everywhere): Fix GC state checks so that it is possible
+	to modify the default GC.
+	
+2001-02-20  Neil Jerram  <neil@ossau.uklinux.net>
+
+	* xlib.c (valid_dsp, scm_x_open_display_x, valid_win,
+	scm_x_create_window_x, valid_gc, valid_data, draw): Make
+	scm_error_error arguments consistent with the corresponding
+	message strings.  Thanks to Martin Grabmueller for pointing out
+	this problem.
+
+2001-02-17  Neil Jerram  <neil@ossau.uklinux.net>
+
+	* Version 0.2 released.

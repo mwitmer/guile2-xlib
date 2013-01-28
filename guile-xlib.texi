@@ -1,0 +1,226 @@
+\input texinfo
+@c guile-xlib.texi
+@c
+@c	Copyright (C) 2002 Thien-Thi Nguyen
+@c
+@c This file is part of guile-xlib.
+@c
+@c guile-xlib is free software; you can redistribute it and/or modify
+@c it under the terms of the GNU General Public License as published by
+@c the Free Software Foundation; either version 2, or (at your option)
+@c any later version.
+@c
+@c guile-xlib is distributed in the hope that it will be useful,
+@c but WITHOUT ANY WARRANTY; without even the implied warranty of
+@c MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+@c GNU General Public License for more details.
+@c
+@c You should have received a copy of the GNU General Public License
+@c along with this software; see the file COPYING.  If not, write to
+@c the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+@c Boston, MA 02111-1307 USA
+
+@c %**start of header
+@setfilename guile-xlib.info
+@settitle Guile-Xlib Reference Manual
+@set guile
+@set MANUAL_EDITION 0.4
+@c %**end of header
+
+@c + @include version.texi
+@c + @include doc-macros.texi
+
+@c @iftex
+@c @cropmarks
+@c @end iftex
+
+@dircategory The Algorithmic Language Scheme
+@direntry
+* Guile-Xlib Reference: (guile-xlib).     Using libX11 from Guile.
+@end direntry
+
+@setchapternewpage off
+
+@ifinfo
+Guile Reference Manual
+Copyright (C) 2002 Thien-Thi Nguyen
+
+Permission is granted to make and distribute verbatim copies of
+this manual provided the copyright notice and this permission notice
+are preserved on all copies.
+
+@ignore
+Permission is granted to process this file through TeX and print the
+results, provided the printed document carries copying permission
+notice identical to this one except for the removal of this paragraph
+(this paragraph not being relevant to the printed manual).
+@end ignore
+
+Permission is granted to copy and distribute modified versions of this
+manual under the conditions for verbatim copying, provided that the entire
+resulting derived work is distributed under the terms of a permission
+notice identical to this one.
+
+Permission is granted to copy and distribute translations of this manual
+into another language, under the above conditions for modified versions,
+except that this permission notice may be stated in a translation approved
+by the Free Software Foundation.
+@end ifinfo
+
+@titlepage
+@sp 10
+@comment The title is printed in a large font.
+@title Guile-Xlib Reference Manual
+@subtitle Edition @value{MANUAL_EDITION}, for use with Guile-Xlib @value{VERSION}
+@c - @subtitle $Id: guile.texi,v 1.4 2002/08/29 05:34:04 ttn Exp $
+
+@c AUTHORS
+
+@author Thien-Thi Nguyen
+@author @email{ttn@@gnu.org}
+
+@c The following two commands start the copyright page.
+@page
+@vskip 0pt plus 1filll
+@vskip 0pt plus 1filll
+Copyright @copyright{} 2002 Thien-Thi Nguyen
+
+Permission is granted to make and distribute verbatim copies of
+this manual provided the copyright notice and this permission notice
+are preserved on all copies.
+
+Permission is granted to copy and distribute modified versions of this
+manual under the conditions for verbatim copying, provided that the entire
+resulting derived work is distributed under the terms of a permission
+notice identical to this one.
+
+Permission is granted to copy and distribute translations of this manual
+into another language, under the above conditions for modified versions,
+except that this permission notice may be stated in a translation approved
+by Free Software Foundation.
+@end titlepage
+
+@c @smallbook
+@finalout
+@headings double
+
+@c Where to find Guile-Xlib examples.
+@c + @set example-dir doc/examples
+
+@ifnottex
+@node Top, Guile-Xlib License, (dir), (dir)
+@top The Guile-Xlib Reference Manual
+
+This reference manual documents Guile-Xlib, a set of libX11 bindings
+and enhancements for Guile Scheme.  It describes how to use Guile-Xlib in
+many useful and interesting ways.
+
+This Info file contains edition @value{MANUAL_EDITION} of the reference
+manual, corresponding to Guile version @value{VERSION}.
+@end ifnottex
+
+@menu
+* Guile-Xlib License::          Conditions for copying and using Guile-Xlib.
+* Enhancement Philosophy::      Guile-Xlib is more than a thin layer.
+* Function Reference::          As many as can fit in xlib.c!
+* Index::
+@end menu
+
+@c ---------------------------------------------------------------------------
+@node    Guile-Xlib License
+@chapter Guile-Xlib License
+
+Guile-Xlib was written by Neil Jerram.   It is released under GNU GPL.
+Thank you, Neil!
+
+@c ---------------------------------------------------------------------------
+@node    Enhancement Philosophy
+@chapter Enhancement Philosophy
+
+Guile-Xlib is more than a thin layer.  This section is a compilation of
+comments by Neil on exactly what that means.
+
+@section Extra Resource Tracking
+@cindex differences, this interface and raw Xlib in C
+
+Some differences are inevitable.  When the power of Xlib is made
+available in an general purpose interpreted environment like Guile,
+we need to make sure that the interface cannot be called in a way
+that would cause the environment as a whole to crash or hang.  For
+example, in C you can call XCloseDisplay and then, say,
+XDestroyWindow for the display that you have just closed; and your
+program will probably hang or crash as a result.  An interface like
+the one implemented here must protect the environment against such
+problems by detecting and rejecting invalid usage.
+
+In practice, this means that the interface needs to track the
+current state of X resources like displays and windows.  So the
+Guile Xlib interface differs from C Xlib at least in that it stores
+certain additional state information and uses this information to
+detect and disallow invalid usage.
+
+Given that some difference is inevitable, one piece of Schemely
+behaviour is sufficiently useful - and sufficiently easier to
+implement in this interface than in a Scheme layer above it - that
+it merits a further small departure from C Xlib.  This is the
+automatic freeing of X resources when the interface-level objects
+associated with them are garbage collected.  It applies to displays
+(using XCloseDisplay), windows (XDestroyWindow) and non-default gcs
+(XFreeGC).  Note that it is still possible to free these resources
+explicitly, using the x-close-display!, x-destroy-window! and
+x-free-gc! primitives respectively.
+
+Many further differences (between this interface and C Xlib) are
+possible, but none are compelling.  The X people presumably thought
+quite carefully about the structure and completeness of the Xlib
+interface, and that's worth benefitting from.  Layers presenting a
+graphical X interface with a different structure, or from a
+different angle, can easily be implemented in Scheme on top of
+this one.
+
+@section Garbage Collection
+@cindex garbage collection
+
+The one wrinkle in implementing automatic freeing of X resources is
+that almost all X resources depend on a valid display, so we have
+to be careful that the display resource is always freed (using
+XCloseDisplay) last of all.
+
+In most cases this is handled by having resource smobs include a
+reference to the display smob.  But there is still a problem when
+all remaining X resource references are dropped between one GC
+cycle and the next: when this happens, the next GC sweep could free
+the display smob before it gets to some of the other resource
+smobs.
+
+Fortunately, resource smobs can check, in their free functions,
+whether this has happened, by looking at the SCM_TYP16 of their
+reference to the display smob.  If the display smob is still valid,
+this will be scm_tc16_xdisplay, and the relevant X resource should
+be freed as normal.  If the display smob has been freed earlier in
+this sweep, GC will have set its SCM_TYP16 to scm_tc_free_cell;
+this indicates that XCloseDisplay has already been called, and so
+the relevant X resource no longer needs to be freed.
+
+@c ---------------------------------------------------------------------------
+@node    Function Reference
+@chapter Function Reference
+
+@include xlib.texi
+
+@c ---------------------------------------------------------------------------
+@node    Index
+@chapter Index
+
+This index contains concepts, keywords and non-Schemey names for several
+features, to make it easier to locate the desired sections.
+
+@printindex cp
+
+@c ---------------------------------------------------------------------------
+
+@contents
+
+@bye
+
+@c guile-xlib.texi ends here

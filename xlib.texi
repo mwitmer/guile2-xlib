@@ -1,0 +1,451 @@
+@c generated file -- do not edit!
+@c xlib.twerp --- extracted reference
+@c todo: partition these, add examples, etc
+
+@section core
+@cindex core
+
+The (xlib core) module provides low-level procedures.
+See also the next section for higher-level abstractions.
+
+@c @twerpdoc (x-open-display! (C scm_x_open_display_x))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-open-display! host
+@deffnx {C Function} scm_x_open_display_x (host)
+Opens a display connection to the X server on @var{host}
+and returns a value that can be used to refer to this
+connection in future X procedure calls.  If @var{host} is
+omitted, @code{x-open-display!} uses the value of the
+DISPLAY environment variable.
+@end deffn
+@c @twerpdoc (x-close-display! (C scm_x_close_display_x))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-close-display! display
+@deffnx {C Function} scm_x_close_display_x (display)
+Closes the X server connection @var{display}.
+@end deffn
+@c @twerpdoc (x-no-op! (C scm_x_no_op_x))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-no-op! display
+@deffnx {C Function} scm_x_no_op_x (display)
+See XNoOp.
+@end deffn
+@c @twerpdoc (x-flush! (C scm_x_flush_x))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-flush! display
+@deffnx {C Function} scm_x_flush_x (display)
+Flushes pending events for the X server connection @var{display}.
+@end deffn
+@c @twerpdoc (x-connection-number (C scm_x_connection_number))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-connection-number display
+@deffnx {C Function} scm_x_connection_number (display)
+Return the file descriptor for the specified DISPLAY.
+@end deffn
+@c @twerpdoc (x-screen-count (C scm_x_screen_count))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-screen-count display
+@deffnx {C Function} scm_x_screen_count (display)
+Return the number of screens for the specified DISPLAY.
+@end deffn
+@c @twerpdoc (x-default-screen (C scm_x_default_screen))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-default-screen display
+@deffnx {C Function} scm_x_default_screen (display)
+Return the default screen number of the specified DISPLAY.
+@end deffn
+@c @twerpdoc (x-q-length (C scm_x_q_length))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-q-length display
+@deffnx {C Function} scm_x_q_length (display)
+Return the number of events queued for the specified DISPLAY
+@end deffn
+@c @twerpdoc (x-server-vendor (C scm_x_server_vendor))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-server-vendor display
+@deffnx {C Function} scm_x_server_vendor (display)
+Return the server vendor string for the specified DISPLAY
+@end deffn
+@c @twerpdoc (x-protocol-version (C scm_x_protocol_version))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-protocol-version display
+@deffnx {C Function} scm_x_protocol_version (display)
+Return the protocol version number for the specified DISPLAY
+@end deffn
+@c @twerpdoc (x-protocol-revision (C scm_x_protocol_revision))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-protocol-revision display
+@deffnx {C Function} scm_x_protocol_revision (display)
+Return the protocol revision number for the specified DISPLAY
+@end deffn
+@c @twerpdoc (x-vendor-release (C scm_x_vendor_release))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-vendor-release display
+@deffnx {C Function} scm_x_vendor_release (display)
+Return the vendor release number for the specified DISPLAY
+@end deffn
+@c @twerpdoc (x-display-string (C scm_x_display_string))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-display-string display
+@deffnx {C Function} scm_x_display_string (display)
+Return the string that was passed to x-open-display! when
+the specified DISPLAY was opened.
+@end deffn
+@c @twerpdoc (x-bitmap-unit (C scm_x_bitmap_unit))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-bitmap-unit display
+@deffnx {C Function} scm_x_bitmap_unit (display)
+Return the size of a bitmap's scanline unit in bits,
+for the specified DISPLAY.
+@end deffn
+@c @twerpdoc (x-bitmap-bit-order (C scm_x_bitmap_bit_order))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-bitmap-bit-order display
+@deffnx {C Function} scm_x_bitmap_bit_order (display)
+Return either LSBFirst or MSBFirst to indicate whether
+the leftmost bit in the bitmap as displayed on the screen
+is the least or most significant bit in the unit,
+for the specified DISPLAY.
+@end deffn
+@c @twerpdoc (x-bitmap-pad (C scm_x_bitmap_pad))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-bitmap-pad display
+@deffnx {C Function} scm_x_bitmap_pad (display)
+Return the number of bits that each scanline must be padded,
+for the specified DISPLAY.
+@end deffn
+@c @twerpdoc (x-image-byte-order (C scm_x_image_byte_order))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-image-byte-order display
+@deffnx {C Function} scm_x_image_byte_order (display)
+Return the required byte order for images for each
+scanline unit in XY format (bitmap) or for each pixel
+value in Z format, for the specified DISPLAY.
+@end deffn
+@c @twerpdoc (x-next-request (C scm_x_next_request))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-next-request display
+@deffnx {C Function} scm_x_next_request (display)
+Return the full serial number that is to be used for
+the next request, for the specified DISPLAY.
+@end deffn
+@c @twerpdoc (x-last-known-request-processed (C scm_x_last_known_request_processed))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-last-known-request-processed display
+@deffnx {C Function} scm_x_last_known_request_processed (display)
+Return the full serial number of the last request known
+by Xlib to have been processed by the X server,
+for the specified DISPLAY.
+@end deffn
+@c @twerpdoc (x-display-of (C scm_x_display_of))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-display-of whatever
+@deffnx {C Function} scm_x_display_of (whatever)
+Extract a display from the supplied argument.
+@end deffn
+@c @twerpdoc (x-all-planes (C scm_x_all_planes))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-all-planes 
+@deffnx {C Function} scm_x_all_planes ()
+Return a value with all valid plane bits set.
+@end deffn
+@c @twerpdoc (x-root-window (C scm_x_root_window))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-root-window display screen
+@deffnx {C Function} scm_x_root_window (display, screen)
+Return the root window of the specified DISPLAY and SCREEN.
+If SCREEN is omitted, the display's default screen is assumed.
+@end deffn
+@c @twerpdoc (x-black-pixel (C scm_x_black_pixel))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-black-pixel display screen
+@deffnx {C Function} scm_x_black_pixel (display, screen)
+Return the black pixel value of the specified DISPLAY and SCREEN.
+If SCREEN is omitted, the display's default screen is assumed.
+@end deffn
+@c @twerpdoc (x-white-pixel (C scm_x_white_pixel))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-white-pixel display screen
+@deffnx {C Function} scm_x_white_pixel (display, screen)
+Return the white pixel value of the specified DISPLAY and SCREEN.
+If SCREEN is omitted, the display's default screen is assumed.
+@end deffn
+@c @twerpdoc (x-display-width (C scm_x_display_width))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-display-width display screen
+@deffnx {C Function} scm_x_display_width (display, screen)
+Return the width in pixels of the specified DISPLAY and SCREEN.
+If SCREEN is omitted, the display's default screen is assumed.
+@end deffn
+@c @twerpdoc (x-display-height (C scm_x_display_height))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-display-height display screen
+@deffnx {C Function} scm_x_display_height (display, screen)
+Return the height in pixels of the specified DISPLAY and SCREEN.
+If SCREEN is omitted, the display's default screen is assumed.
+@end deffn
+@c @twerpdoc (x-display-width-mm (C scm_x_display_width_mm))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-display-width-mm display screen
+@deffnx {C Function} scm_x_display_width_mm (display, screen)
+Return the width in mm of the specified DISPLAY and SCREEN.
+If SCREEN is omitted, the display's default screen is assumed.
+@end deffn
+@c @twerpdoc (x-display-height-mm (C scm_x_display_height_mm))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-display-height-mm display screen
+@deffnx {C Function} scm_x_display_height_mm (display, screen)
+Return the height in mm of the specified DISPLAY and SCREEN.
+If SCREEN is omitted, the display's default screen is assumed.
+@end deffn
+@c @twerpdoc (x-display-planes (C scm_x_display_planes))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-display-planes display screen
+@deffnx {C Function} scm_x_display_planes (display, screen)
+Return the depth of the specified DISPLAY and SCREEN.
+If SCREEN is omitted, the display's default screen is assumed.
+@end deffn
+@c @twerpdoc (x-display-cells (C scm_x_display_cells))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-display-cells display screen
+@deffnx {C Function} scm_x_display_cells (display, screen)
+Return the number of entries in the default colormap depth of
+the specified DISPLAY and SCREEN.
+If SCREEN is omitted, the display's default screen is assumed.
+@end deffn
+@c @twerpdoc (x-screen-of-display (C scm_x_screen_of_display))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-screen-of-display display screen
+@deffnx {C Function} scm_x_screen_of_display (display, screen)
+Return a screen object for the specified DISPLAY and SCREEN number.
+If SCREEN is omitted, return a screen object for the default screen.
+@end deffn
+@c @twerpdoc (x-screen-number-of-screen (C scm_x_screen_number_of_screen))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-screen-number-of-screen screen
+@deffnx {C Function} scm_x_screen_number_of_screen (screen)
+Return the screen number of the specified screen object.
+@end deffn
+@c @twerpdoc (x-min-colormaps (C scm_x_min_colormaps))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-min-colormaps display screen
+@deffnx {C Function} scm_x_min_colormaps (display, screen)
+Return the minimum number of colormaps for
+the specified DISPLAY and SCREEN.
+If SCREEN is omitted, the display's default screen is assumed.
+@end deffn
+@c @twerpdoc (x-max-colormaps (C scm_x_max_colormaps))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-max-colormaps display screen
+@deffnx {C Function} scm_x_max_colormaps (display, screen)
+Return the maximum number of colormaps for
+the specified DISPLAY and SCREEN.
+If SCREEN is omitted, the display's default screen is assumed.
+@end deffn
+@c @twerpdoc (x-create-window! (C scm_x_create_window_x))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-create-window! display
+@deffnx {C Function} scm_x_create_window_x (display)
+Creates a new X window on the specified @var{display}
+and returns a value that can be used to refer to the
+created window in X drawing procedures.
+@end deffn
+@c @twerpdoc (x-map-window! (C scm_x_map_window_x))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-map-window! window
+@deffnx {C Function} scm_x_map_window_x (window)
+Maps the X window @var{window}.
+@end deffn
+@c @twerpdoc (x-unmap-window! (C scm_x_unmap_window_x))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-unmap-window! window
+@deffnx {C Function} scm_x_unmap_window_x (window)
+Unmaps the X window @var{window}.
+@end deffn
+@c @twerpdoc (x-destroy-window! (C scm_x_destroy_window_x))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-destroy-window! window
+@deffnx {C Function} scm_x_destroy_window_x (window)
+Destroys the X window @var{window}.
+@end deffn
+@c @twerpdoc (x-default-gc (C scm_x_default_gc))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-default-gc display screen
+@deffnx {C Function} scm_x_default_gc (display, screen)
+Returns the default GC for the specified @var{display} and @var{screen}.
+@end deffn
+@c @twerpdoc (x-free-gc! (C scm_x_free_gc_x))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-free-gc! gc
+@deffnx {C Function} scm_x_free_gc_x (gc)
+Frees the specified @var{gc}.
+@end deffn
+@c @twerpdoc (x-create-gc! (C scm_x_create_gc_x))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-create-gc! drawable changes
+@deffnx {C Function} scm_x_create_gc_x (drawable, changes)
+Creates the specified @var{gc}.
+@end deffn
+@c @twerpdoc (x-change-gc! (C scm_x_change_gc_x))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-change-gc! gc changes
+@deffnx {C Function} scm_x_change_gc_x (gc, changes)
+Changes the specified @var{gc}.
+@end deffn
+@c @twerpdoc (x-set-dashes! (C scm_x_set_dashes_x))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-set-dashes! gc offset dashes
+@deffnx {C Function} scm_x_set_dashes_x (gc, offset, dashes)
+See XSetDashes.
+@end deffn
+@c @twerpdoc (x-set-clip-rectangles! (C scm_x_set_clip_rectangles_x))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-set-clip-rectangles! gc x y rectangles ordering
+@deffnx {C Function} scm_x_set_clip_rectangles_x (gc, x, y, rectangles, ordering)
+See XSetClipRectangles.
+@end deffn
+@c @twerpdoc (x-copy-gc! (C scm_x_copy_gc_x))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-copy-gc! src dst fields
+@deffnx {C Function} scm_x_copy_gc_x (src, dst, fields)
+See XCopyGC.
+@end deffn
+@c @twerpdoc (x-draw-arcs! (C scm_x_draw_arcs_x))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-draw-arcs! window gc arcs
+@deffnx {C Function} scm_x_draw_arcs_x (window, gc, arcs)
+Draws a set of arcs on the specified @var{window}
+using the specified graphics context @var{gc}.
+@var{arcs} should be a uniform array of shorts
+with dimensions N x 6, where N is the number of arcs.
+The 6 elements that specify each arc are, in order,
+X, Y, WIDTH, HEIGHT, ANGLE1 and ANGLE2.
+@end deffn
+@c @twerpdoc (x-draw-lines! (C scm_x_draw_lines_x))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-draw-lines! window gc points
+@deffnx {C Function} scm_x_draw_lines_x (window, gc, points)
+Draws a set of lines on the specified @var{window}
+using the specified graphics context @var{gc}.
+@var{points} should be a uniform array of shorts
+with dimensions N x 2, where N is the number of points.
+@end deffn
+@c @twerpdoc (x-draw-points! (C scm_x_draw_points_x))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-draw-points! window gc points
+@deffnx {C Function} scm_x_draw_points_x (window, gc, points)
+Draws a set of points on the specified @var{window}
+using the specified graphics context @var{gc}.
+@var{points} should be a uniform array of shorts
+with dimensions N x 2, where N is the number of points.
+@end deffn
+@c @twerpdoc (x-draw-segments! (C scm_x_draw_segments_x))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-draw-segments! window gc segments
+@deffnx {C Function} scm_x_draw_segments_x (window, gc, segments)
+Draws a set of line segments on the specified @var{window}
+using the specified graphics context @var{gc}.
+@var{segments} should be a uniform array of shorts
+with dimensions N x 4, where N is the number of segments.
+The 4 elements that specify each line segment are, in order,
+X1, Y1, X2, Y2.
+@end deffn
+@c @twerpdoc (x-draw-rectangles! (C scm_x_draw_rectangles_x))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-draw-rectangles! window gc rectangles
+@deffnx {C Function} scm_x_draw_rectangles_x (window, gc, rectangles)
+Draws a set of rectangles on the specified @var{window}
+using the specified graphics context @var{gc}.
+@var{rectangles} should be a uniform array of shorts
+with dimensions N x 4, where N is the number of rectangles.
+The 4 elements that specify each rectangle are, in order,
+X1, Y1, WIDTH, HEIGHT.
+@end deffn
+@c @twerpdoc (x-check-mask-event! (C scm_x_check_mask_event_x))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-check-mask-event! display mask event
+@deffnx {C Function} scm_x_check_mask_event_x (display, mask, event)
+See XCheckMaskEvent.
+@end deffn
+@c @twerpdoc (x-check-typed-event! (C scm_x_check_typed_event_x))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-check-typed-event! display type event
+@deffnx {C Function} scm_x_check_typed_event_x (display, type, event)
+See XCheckTypedEvent.
+@end deffn
+@c @twerpdoc (x-check-typed-window-event! (C scm_x_check_typed_window_event_x))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-check-typed-window-event! window type event
+@deffnx {C Function} scm_x_check_typed_window_event_x (window, type, event)
+See XCheckTypedWindowEvent.
+@end deffn
+@c @twerpdoc (x-check-window-event! (C scm_x_check_window_event_x))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-check-window-event! window mask event
+@deffnx {C Function} scm_x_check_window_event_x (window, mask, event)
+See XCheckWindowEvent.
+@end deffn
+@c @twerpdoc (x-events-queued! (C scm_x_events_queued_x))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-events-queued! display mode
+@deffnx {C Function} scm_x_events_queued_x (display, mode)
+See XEventsQueued.
+@end deffn
+@c @twerpdoc (x-pending! (C scm_x_pending_x))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-pending! display
+@deffnx {C Function} scm_x_pending_x (display)
+See XPending.
+@end deffn
+@c @twerpdoc (x-mask-event! (C scm_x_mask_event_x))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-mask-event! display mask event
+@deffnx {C Function} scm_x_mask_event_x (display, mask, event)
+See XMaskEvent.
+@end deffn
+@c @twerpdoc (x-next-event! (C scm_x_next_event_x))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-next-event! display event
+@deffnx {C Function} scm_x_next_event_x (display, event)
+See XNextEvent.
+@end deffn
+@c @twerpdoc (x-peek-event! (C scm_x_peek_event_x))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-peek-event! display event
+@deffnx {C Function} scm_x_peek_event_x (display, event)
+See XPeekEvent.
+@end deffn
+@c @twerpdoc (x-select-input! (C scm_x_select_input_x))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-select-input! window mask
+@deffnx {C Function} scm_x_select_input_x (window, mask)
+See XSelectInput.
+@end deffn
+@c @twerpdoc (x-window-event! (C scm_x_window_event_x))
+@c ./xlib.cdoc
+@deffn {Scheme Procedure} x-window-event! window mask event
+@deffnx {C Function} scm_x_window_event_x (window, mask, event)
+See XWindowEvent.
+@end deffn
+
+@section high
+@cindex high
+
+The (xlib xlib) module provides high-level abstractions.
+See also the previous section for low-level procedures.
+
+@c @twerpdoc (x-event-loop!)
+@c ./xlib.doc
+@deffn {Scheme Procedure} x-event-loop! display hook . events
+On @var{display}, run @var{hook} w/ event @var{event}, looping until
+`x-event-loop-quit' is caught, at which point return the thrown args.
+See also `x-event-loop-quit!'.
+@end deffn
+@c @twerpdoc (x-event-loop-quit!)
+@c ./xlib.doc
+@deffn {Scheme Procedure} x-event-loop-quit! . values
+Throw `x-event-loop-quit' with zero or more @var{values}.
+See also `x-event-loop!'.
+@end deffn
+
+@c xlib.twerp ends here

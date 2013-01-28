@@ -1,0 +1,22 @@
+AC_INIT(xlib.c)
+AM_INIT_AUTOMAKE(guile-xlib, 0.5)
+AC_CONFIG_MACRO_DIR([m4])
+AM_MAINTAINER_MODE
+
+PKG_CHECK_MODULES([GUILE], [guile-2.0])
+
+AC_PROG_CC
+AC_PROG_CPP
+AC_PROG_INSTALL
+AC_PROG_LN_S
+AC_PROG_MAKE_SET
+AM_PROG_LIBTOOL
+
+dnl Check for X.
+AC_PATH_XTRA
+
+dnl Checks for library functions.
+AC_FUNC_MEMCMP
+
+AC_OUTPUT(Makefile)
+

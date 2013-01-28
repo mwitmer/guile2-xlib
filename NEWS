@@ -1,0 +1,101 @@
+guile-xlib NEWS --- history of user-visible changes.  -*- text -*-
+
+Copyright (C) 2001 Neil Jerram
+See the end for copying conditions.
+
+Updated changes Copyright (C) 2013 Mark Witmer
+
+Please send guile-xlib bug reports to mark@markwitmer.com.
+
+
+Changes since release 0.4
+
+* All references to deprecated guile features replaced with up-to-date
+  equivalents
+* Added Configure.ac and updated Makefile.am
+
+Changes since release 0.3
+
+* Some pixmap-related primitives added
+
+x-create-pixmap!, x-copy-area!, x-clear-area!, x-clear-window!
+
+* Documentation created
+
+guile-xlib now has Info documentation.
+
+* autogen.sh added
+
+The distribution now includes the autogen.sh script that the authors
+use for bootstrapping the build before running ./configure.  This
+means that you can now hack Makefile.am, configure.in etc. yourself,
+and then run autogen.sh to propagate your changes into the rest of the
+build.
+
+* (xlib core) module removed
+
+This is an incompatible change, for which apologies, but it removes
+complexity that we simply don't need.
+
+All of guile-xlib's functionality is now imported by using just the
+(xlib xlib) module.
+
+* guile-xlib program removed
+
+The only difference between guile-xlib and plain guile was the
+deprecated usage of the scm_register_module_xxx interface.  Now that
+this usage is no longer needed, there is no point in retaining
+guile-xlib.
+
+* Compilation compatibility for current and development Guiles
+
+xlib.c has been enhanced so that it can be compiled under both current
+stable (1.6.x) Guile and development CVS Guile.  I'd like to support
+older Guiles as well (1.3.4, 1.4.x), but unfortunately I don't have
+those handy to test against.
+
+
+Changes since release 0.2
+
+* More informative error messages
+
+Many of the errors that guile-xlib can signal now produce more
+information messages.  For example, the error that is signalled if you
+attempt to map a third party window now includes a description of the
+bad window argument:
+
+guile> (define r (x-root-window d))
+guile> (x-map-window! r)
+ERROR: In procedure x-map-window!:
+ERROR: Window #<x-window 80c5878 XID 25 third party> belongs to a third party
+ABORT: (misc-error)
+
+
+Changes since sliced bread
+
+* guile-xlib 0.2 released, February 2001
+
+Version number 0.1 was used for a non-packaged version of guile-xlib
+that was on my web site for a while.
+
+
+Copyright information:
+
+Copyright (C) 2001 Neil Jerram
+
+   Permission is granted to anyone to make or distribute verbatim copies
+   of this document as received, in any medium, provided that the
+   copyright notice and this permission notice are preserved,
+   thus giving the recipient permission to redistribute in turn.
+
+   Permission is granted to distribute modified versions
+   of this document, or of portions of it,
+   under the above conditions, provided also that they
+   carry prominent notices stating who last changed them.
+
+
+Local variables:
+mode: outline
+paragraph-separate: "[ 	]*$"
+end:
+

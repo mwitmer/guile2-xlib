@@ -1,0 +1,241 @@
+This is version 0.5 of guile-xlib.  -*- text -*-
+
+It should be treated as of BETA quality - i.e. it seems to work, but
+be careful and don't rely on it more than you have tested it to your
+own satisfaction.
+
+Please send bug reports to mark@markwitmer.com.
+
+
+Getting Started ======================================================
+
+1. Make sure that you have a recentish version of Guile installed on
+   your system.  I've tested against Guile 2.0.x. You can type
+
+     guile -c '(write-line (version))'
+
+   in your terminal window to check which version of Guile you have:
+   the output should be `2.0.1' or greater.)  If not, see under
+   "Obtaining guile-xlib and Guile" how to get it.
+
+2. Make sure that you stand in the `guile-xlib' directory and type
+
+     ./configure
+
+   This will configure guile-xlib for your system.
+
+3. Type
+
+     make install
+
+   to build and install guile-xlib.
+
+   If everything went well we're ready to enter the interpreter...
+
+4. Type
+
+     guile
+
+   You should now be at the Guile prompt ("scheme@(guile-user)> ").
+
+5. Type
+
+     (use-modules (xlib xlib))
+
+   to load guile-xlib.
+
+6. We're now ready to try some basic guile-xlib functionality.
+
+   Bring up an X window:
+   
+     (define d (x-open-display!))
+     (define w (x-create-window! d))
+     (x-map-window! w)
+     (x-flush! d)
+   
+   Draw a line and a rectangle in it:
+   
+     (define gc (x-default-gc d))
+     (x-draw-line! w gc 100 100 200 200)
+     (x-flush! d)
+     (x-draw-rectangle! w gc 200 200 50 50)
+     (x-flush! d)
+   
+   Create a second window and experiment with guile-xlib's event
+   handling:
+   
+     (test-event-loop d)
+
+   Documentation of guile-xlib's approach and primitives is installed
+   in the Info system.  Further details on how guile-xlib works and
+   the functionality available may be gleaned from the Scheme file
+   installed at <prefix>/share/guile/xlib/xlib.scm.
+
+
+What Is Included =====================================================
+
+Display and screen management:
+    
+    x-open-display!, x-close-display!, x-no-op!, x-flush!,
+    x-connection-number, x-screen-count, x-default-screen,
+    x-server-vendor, x-protocol-version, x-protocol-revision,
+    x-vendor-release, x-display-string, x-bitmap-unit,
+    x-bitmap-bit-order, x-bitmap-pad, x-image-byte-order,
+    x-next-request, x-last-known-request-processed, x-display-of,
+    x-all-planes, x-root-window, x-black-pixel, x-white-pixel,
+    x-display-width, x-display-height, x-display-width-mm,
+    x-display-height-mm, x-display-planes, x-display-cells,
+    x-screen-of-display, x-screen-number-of-screen, x-min-colormaps,
+    x-max-colormaps, x-default-depth, x-width-of-screen,
+    x-height-of-screen, x-width-mm-of-screen, x-height-mm-of-screen,
+    x-planes-of-screen, x-cells-of-screen, x-min-cmaps-of-screen,
+    x-max-cmaps-of-screen
+
+    None, LSBFirst, MSBFirst
+    
+Window management:
+    
+    x-create-window!, x-map-window!, x-unmap-window!,
+    x-destroy-window!, x-clear-window!, x-clear-area!
+
+Pixmaps:
+
+    x-create-pixmap!, x-copy-area!
+    
+GCs:
+    
+    x-default-gc, x-free-gc!, x-create-gc!, x-change-gc!,
+    x-set-dashes!, x-set-clip-rectangles!, x-copy-gc!,
+    x-set-function!, x-set-plane-mask!, x-set-foreground!,
+    x-set-background!, x-set-line-width!, x-set-line-style!,
+    x-set-cap-style!, x-set-join-style!, x-set-fill-style!,
+    x-set-fill-rule!, x-set-tile!, x-set-stipple!, x-set-ts-x-origin!,
+    x-set-ts-y-origin!, x-set-font!, x-set-subwindow-mode!,
+    x-set-graphics-exposures!, x-set-clip-x-origin!,
+    x-set-clip-y-origin!, x-set-clip-mask!, x-set-dash-offset!,
+    x-set-dash-list!, x-set-arc-mode!, x-set-clip-origin!,
+    x-set-line-attributes!, x-set-ts-origin!, x-set-state!
+
+    GCFunction, GCPlaneMask, GCForeground, GCBackground, GCLineWidth,
+    GCLineStyle, GCCapStyle, GCJoinStyle, GCFillStyle, GCFillRule,
+    GCTile, GCStipple, GCTileStipXOrigin, GCTileStipYOrigin, GCFont,
+    GCSubwindowMode, GCGraphicsExposures, GCClipXOrigin,
+    GCClipYOrigin, GCClipMask, GCDashOffset, GCDashList, GCArcMode,
+    GXclear, GXand, GXandReverse, GXcopy, GXandInverted, GXnoop,
+    GXxor, GXor, GXnor, GXequiv, GXinvert, GXorReverse,
+    GXcopyInverted, GXorInverted, GXnand, GXset, LineSolid,
+    LineOnOffDash, LineDoubleDash, CapNotLast, CapButt, CapRound,
+    CapProjecting, JoinMiter, JoinRound, JoinBevel, FillSolid,
+    FillTiled, FillStippled, FillOpaqueStippled, EvenOddRule,
+    WindingRule, ClipByChildren, IncludeInferiors, ArcChord,
+    ArcPieSlice, Unsorted, YSorted, YXSorted, YXBanded
+    
+Drawing:
+    
+    x-draw-arcs!, x-draw-lines!, x-draw-points!, x-draw-segments!,
+    x-draw-rectangles!, x-draw-arc!, x-draw-line!, x-draw-point!,
+    x-draw-segment!, x-draw-rectangle!
+    
+Event handling:
+    
+    x-q-length, x-check-mask-event!, x-check-typed-event!,
+    x-check-typed-window-event!, x-check-window-event!,
+    x-events-queued!, x-pending!, x-mask-event!, x-next-event!,
+    x-peek-event!, x-select-input!, x-window-event!, x-event:type,
+    x-event:serial, x-event:send-event, x-event:display,
+    x-event:window, x-event:root, x-event:subwindow, x-event:time,
+    x-event:x, x-event:y, x-event:x-root, x-event:y-root,
+    x-event:state, x-event:keycode, x-event:same-screen,
+    x-event:detail, x-event:focus, x-event:button, x-event:is-hint,
+    x-event:mode, x-event:key-vector, x-event:width, x-event:height,
+    x-event:count, x-event:major-code, x-event:minor-code,
+    x-event:drawable, x-event:parent, x-event:border-width,
+    x-event:override-redirect, x-event:event, x-event:from-configure,
+    x-event:above, x-event:value-mask, x-event:place, x-event:atom,
+    x-event:selection, x-event:owner, x-event:requestor,
+    x-event:target, x-event:property, x-event:colormap, x-event:new,
+    x-event:message-type, x-event:data, x-event:format,
+    x-event:request, x-event:first-keycode, x-event:resourceid,
+    x-event:error-code, x-event:request-code
+
+    QueuedAlready, QueuedAfterReading, QueuedAfterFlush, NoEventMask,
+    KeyPressMask, KeyReleaseMask, ButtonPressMask, ButtonReleaseMask,
+    EnterWindowMask, LeaveWindowMask, PointerMotionMask,
+    PointerMotionHintMask, Button1MotionMask, Button2MotionMask,
+    Button3MotionMask, Button4MotionMask, Button5MotionMask,
+    ButtonMotionMask, KeymapStateMask, ExposureMask,
+    VisibilityChangeMask, StructureNotifyMask, ResizeRedirectMask,
+    SubstructureNotifyMask, SubstructureRedirectMask, FocusChangeMask,
+    PropertyChangeMask, ColormapChangeMask, OwnerGrabButtonMask,
+    KeyPress, KeyRelease, ButtonPress, ButtonRelease, MotionNotify,
+    EnterNotify, LeaveNotify, FocusIn, FocusOut, KeymapNotify, Expose,
+    GraphicsExpose, NoExpose, VisibilityNotify, CreateNotify,
+    DestroyNotify, UnmapNotify, MapNotify, MapRequest, ReparentNotify,
+    ConfigureNotify, ConfigureRequest, GravityNotify, ResizeRequest,
+    CirculateNotify, CirculateRequest, PropertyNotify, SelectionClear,
+    SelectionRequest, SelectionNotify, ColormapNotify, ClientMessage,
+    MappingNotify, LASTEvent
+
+Event handling utilities and example handlers:
+
+    x-event-loop!, x-event-loop-quit!, x-print-event!, x-button-quit!,
+    test-event-loop
+
+
+What Is Not Included =================================================
+
+- Colour and colormap management.
+
+- Text drawing and font handling.
+
+- Keymap and keysym management.
+
+- Image functions.
+
+- Resource management.
+
+- Cursors.
+
+- Visual management.
+
+- And lots of other little things.
+
+I hope to add most of these in the future, probably as driven by my
+own and other users' requirements.  Contributions are, of course, very
+welcome.
+
+
+About This Distribution ==============================================
+
+Building and installing this distribution gives you:
+
+- a compiled library, libguilexlib.so, which is installed in
+  <prefix>/lib
+
+- a Scheme file, xlib.scm, which is installed at
+  <prefix>/share/guile/xlib/xlib.scm
+
+Other interesting files include:
+
+- INSTALL, which contains (generic) instructions on building and
+  installing guile-xlib.
+
+- NEWS, which describes user-visible changes since the last release of
+  guile-xlib. 
+
+- COPYING, which describes the terms under which you may redistribute
+  guile-xlib, and explains that there is no warranty.
+
+
+Obtaining guile-xlib and Guile ======================================================
+
+The latest release of this guile-xlib fork is available at
+http://github.com/mwitmer/guile.
+
+If you don't already have a recent enough Guile installed on your
+system, you also need to download and install this by following the
+instructions at http://www.gnu.org/software/guile.
+
+The mailing list `guile-user@gnu.org' carries discussions, questions,
+and often answers, about Guile.  To subscribe, send mail to
+guile-user-request@gnu.org.
