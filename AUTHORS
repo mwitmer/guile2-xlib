@@ -2,7 +2,6 @@ To find out what should go in this file, see "Information For
 Maintainers of GNU Software" (maintain.texi), the section called
 "Recording Changes".
 
-
 Neil Jerram:
 is the author of guile-xlib
 

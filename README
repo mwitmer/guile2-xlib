@@ -1,4 +1,4 @@
-This is a fork of version 0.4 of guile-xlib.  -*- text -*-
+This is a guile2-xlib, a guile 2.0-compatible fork of guile-xlib.    -*- text -*-
 
 It should be treated as of BETA quality - i.e. it seems to work, but
 be careful and don't rely on it more than you have tested it to your

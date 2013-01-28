@@ -1,14 +1,15 @@
-guile-xlib NEWS --- history of user-visible changes.  -*- text -*-
+guile2-xlib NEWS --- history of user-visible changes.  -*- text -*-
 
-Copyright (C) 2001 Neil Jerram
 See the end for copying conditions.
 
-Updated changes Copyright (C) 2013 Mark Witmer
+guile2-xlib Copyright (C) 2013 Mark Witmer
 
-Please send guile-xlib bug reports to mark@markwitmer.com.
+Based on guile-xlib Copyright (C) 2001 Neil Jerram
+
+Please send guile2-xlib bug reports to mark@markwitmer.com.
 
 
-Changes since release 0.4
+Changes since (guile-xlib) release 0.4
 
 * All references to deprecated guile features replaced with up-to-date
   equivalents
